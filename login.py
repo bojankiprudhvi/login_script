@@ -71,7 +71,7 @@ try:
     state_date = driver.find_element(By.ID, 'searchfromdate')
 
     # Calculate tomorrow's date
-    tomorrow = datetime.now() + timedelta(days=1)
+    tomorrow = datetime.now() + timedelta(days=6)
     tomorrow_date = tomorrow.strftime('%m/%d/%Y')  # Format as MM/DD/YYYY
 
     # Update the value of the date field with tomorrow's date
