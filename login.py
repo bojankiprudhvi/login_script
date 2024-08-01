@@ -75,6 +75,7 @@ def book_workstation(driver):
  
         # Save the booking
         save_booking(driver)
+        driver.save_screenshot('screenshot.png') 
         toast_message = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "div.toast-message"))
             )
