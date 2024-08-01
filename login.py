@@ -78,10 +78,8 @@ def book_workstation(driver):
         # Save the booking
         save_booking(driver)
         # Take a screenshot
-        screenshot = pyautogui.screenshot()
-
-        # Save the screenshot
-        screenshot.save(os.path.join(screenshot_dir, 'screenshot.png'))  # Save to the correct directory
+        screenshot_dir = '/tmp/screenshots/'
+        driver.save_screenshot(os.path.join(screenshot_dir, 'screenshot.png')) # Save to the correct directory
         toast_message = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "div.toast-message"))
             )
