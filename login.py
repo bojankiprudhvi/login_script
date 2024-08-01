@@ -1,5 +1,7 @@
 import time
 import logging
+import pyautogui
+import os
 from datetime import datetime, timedelta
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -75,7 +77,11 @@ def book_workstation(driver):
  
         # Save the booking
         save_booking(driver)
-        driver.save_screenshot('screenshot.png') 
+        # Take a screenshot
+        screenshot = pyautogui.screenshot()
+
+        # Save the screenshot
+        screenshot.save(os.path.join(screenshot_dir, 'screenshot.png'))  # Save to the correct directory
         toast_message = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "div.toast-message"))
             )
@@ -127,5 +133,7 @@ def save_booking(driver):
 
 if __name__ == "__main__":
     driver = initialize_driver()
+    screenshot_dir = '/tmp/screenshots/'
+    os.makedirs(screenshot_dir, exist_ok=True)
     login(driver)
     book_workstation(driver)
