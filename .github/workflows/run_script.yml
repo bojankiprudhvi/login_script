@@ -52,7 +52,7 @@ jobs:
 
       - name: Run Python script
         run: |
-          python main.py  # Replace with your actual script name
+          python login.py  # Replace with your actual script name
 
       - name: Organize screenshots
         run: |
