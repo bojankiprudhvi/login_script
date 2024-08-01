@@ -1,6 +1,5 @@
 import time
 import logging
-import pyautogui
 import os
 from datetime import datetime, timedelta
 from selenium import webdriver
@@ -77,9 +76,7 @@ def book_workstation(driver):
  
         # Save the booking
         save_booking(driver)
-        # Take a screenshot
-        screenshot_dir = '/tmp/screenshots/'
-        driver.save_screenshot(os.path.join(screenshot_dir, 'screenshot.png')) # Save to the correct directory
+       
         toast_message = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "div.toast-message"))
             )
@@ -88,7 +85,16 @@ def book_workstation(driver):
         logging.info(toast_text)
         logging.info("Booking process completed successfully.")
     except Exception as e:
-       logging.error(f"Error during booking: {e} failed to book the cubical since its is booked by someone ")
+         # Take a screenshot
+        screenshot_dir = '/tmp/screenshots/'
+        driver.save_screenshot(os.path.join(screenshot_dir, 'screenshot.png')) # Save to the correct directory
+       # toast_message = WebDriverWait(driver, 10).until(
+       #     EC.presence_of_element_located((By.CSS_SELECTOR, "div.toast-message"))
+        #    )
+        #toast_text = toast_message.text
+      #  print(toast_text)
+        #logging.info(toast_text)
+        logging.error(f"Error during booking: {e} failed to book the cubical since its is booked by someone ")
     finally:
        time.sleep(5)
        driver.quit()
