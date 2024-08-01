@@ -54,12 +54,13 @@ jobs:
         run: |
           python login.py  # Replace with your actual script name
 
-      - name: Organize screenshots
+      - name: Check Screenshots Directory
         run: |
-          mkdir --parents "/tmp/screenshots/"
+         echo "Listing files in /tmp/screenshots/"
+         ls -la /tmp/screenshots/
 
-      - name: Upload screenshots
-        uses: actions/upload-artifact@v4
+      - name: Upload Screenshots
+        uses: actions/upload-artifact@v2
         with:
           name: screenshots
-          path: /tmp/screenshots/
+          path: /tmp/screenshots/*.png  # Specify the file pattern to match the screenshots
