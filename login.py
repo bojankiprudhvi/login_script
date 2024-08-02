@@ -76,13 +76,6 @@ def book_workstation(driver):
  
         # Save the booking
         save_booking(driver)
-       
-        toast_message = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "div.toast-message"))
-            )
-        toast_text = toast_message.text
-      #  print(toast_text)
-        logging.info(toast_text)
         logging.info("Booking process completed successfully.")
     except Exception as e:
          # Take a screenshot

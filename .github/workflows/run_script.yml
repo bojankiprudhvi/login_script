@@ -3,7 +3,7 @@ name: Run Python examples
 on:
   workflow_dispatch:
   schedule:
-    - cron: "30 18 * * *" # Runs daily at midnight IST
+    - cron: "20 18 * * *" # Runs daily at midnight IST
 
 env:
   DISPLAY: :99
@@ -56,11 +56,11 @@ jobs:
 
       - name: Check Screenshots Directory
         run: |
-         echo "Listing files in /tmp/screenshots/"
-         ls -la /tmp/screenshots/
+          echo "Listing files in /tmp/screenshots/"
+          ls -la /tmp/screenshots/
 
       - name: Upload Screenshots
         uses: actions/upload-artifact@v2
         with:
           name: screenshots
-          path: /tmp/screenshots/*.png  # Specify the file pattern to match the screenshots
+          path: /tmp/screenshots/*.png # Specify the file pattern to match the screenshots
