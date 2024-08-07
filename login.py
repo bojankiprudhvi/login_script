@@ -50,48 +50,42 @@ def book_workstation(driver):
     """Book a workstation."""
     logging.info("Navigating to booking page.")
     driver.get("https://ifazility.com/optdesk/Admin/workstationbook")
-    try:                
-        time.sleep(2)
-        tomorrow = datetime.now() + timedelta(days=6)
-        tomorrow_date = tomorrow.strftime('%m/%d/%Y')
+           
+    time.sleep(2)
+    tomorrow = datetime.now() + timedelta(days=6)
+    tomorrow_date = tomorrow.strftime('%m/%d/%Y')
+    # Set date fields
+    set_date_field(driver, 'searchfromdate', tomorrow_date)
+    set_date_field(driver, 'searchtodate', tomorrow_date)
 
-        # Set date fields
-        set_date_field(driver, 'searchfromdate', tomorrow_date)
-        set_date_field(driver, 'searchtodate', tomorrow_date)
- 
-        # Select time from dropdown
-        select_dropdown(driver, 'dtsearchfrom', "10:40:00")
- 
-        # Click search button
-        driver.find_element(By.ID, 'btnsearch').click()
- 
-        # Set workstation coordinates
-        set_workstation_coordinates(driver, "1041", "1437")
- 
-        # Execute JavaScript function to check booking status
-        execute_booking_status_function(driver)
- 
-        # Select time for start time dropdown
-        select_dropdown(driver, 'tmestart', "10:40:00")
- 
-        # Save the booking
-        save_booking(driver)
-        logging.info("Booking process completed successfully.")
-    except Exception as e:
-         # Take a screenshot
-        screenshot_dir = '/tmp/screenshots/'
-        driver.save_screenshot(os.path.join(screenshot_dir, 'screenshot.png')) # Save to the correct directory
-       # toast_message = WebDriverWait(driver, 10).until(
-       #     EC.presence_of_element_located((By.CSS_SELECTOR, "div.toast-message"))
-        #    )
-        #toast_text = toast_message.text
-      #  print(toast_text)
-        #logging.info(toast_text)
-        logging.error(f"Error during booking: {e} failed to book the cubical since its is booked by someone ")
-    finally:
-       time.sleep(5)
-       driver.quit()
+    # Select time from dropdown
+    select_dropdown(driver, 'dtsearchfrom', "10:40:00")
 
+    # Click search button
+    driver.find_element(By.ID, 'btnsearch').click()
+
+    # Set workstation coordinates
+    set_workstation_coordinates(driver, "1041", "1437")
+
+    # Execute JavaScript function to check booking status
+    execute_booking_status_function(driver)
+
+    # Select time for start time dropdown
+    select_dropdown(driver, 'tmestart', "10:40:00")
+
+    # Save the booking
+    save_booking(driver)
+    logging.info("Booking process completed successfully.")
+    # Take a screenshot
+    screenshot_dir = '/tmp/screenshots/'
+    driver.save_screenshot(os.path.join(screenshot_dir, 'screenshot.png')) # Save to the correct directory
+    # toast_message = WebDriverWait(driver, 10).until(
+    #     EC.presence_of_element_located((By.CSS_SELECTOR, "div.toast-message"))
+    #    )
+    #toast_text = toast_message.text
+    #  print(toast_text)
+    #logging.info(toast_text)
+    
 def set_date_field(driver, field_id, date_value):
     """Set the date field using JavaScript."""
     date_field = driver.find_element(By.ID, field_id)
@@ -115,9 +109,13 @@ def execute_booking_status_function(driver):
     endtime = driver.find_element(By.ID, "dtsearchto").get_attribute("value")
     date = driver.find_element(By.ID, "searchfromdate").get_attribute("value")
     enddate = driver.find_element(By.ID, "searchtodate").get_attribute("value")
-    
+    logging.info(starttime)
+    logging.info(endtime)
+    logging.info(date)
+    logging.info(enddate)
     function_name = "checkbookingstatus_greyred"
     driver.execute_script(f"{function_name}(1041, 0, 1437, 0, '{date}', '{enddate}', '{starttime}', '{endtime}')")
+    logging.info("Exiting  the execute_booking_status_function")
 
 def save_booking(driver):
     """Save the booking and confirm."""
