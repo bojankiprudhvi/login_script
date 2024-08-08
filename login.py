@@ -7,6 +7,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select, WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import pytz
+from datetime import datetime
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -72,9 +74,14 @@ def book_workstation(driver):
 
     # Select time for start time dropdown
     select_dropdown(driver, 'tmestart', "10:40:00")
-
+    ind_time1 = datetime.now(pytz.timezone("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S.%f')
+    logging.info("Before clicking save booking")
+    print(ind_time1)
     # Save the booking
     save_booking(driver)
+    ind_time2 = datetime.now(pytz.timezone("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S.%f')
+    logging.info("After clicking save booking")
+    print(ind_time2)
     logging.info("Booking process completed successfully.")
     # Take a screenshot
     screenshot_dir = '/tmp/screenshots/'
@@ -130,5 +137,7 @@ if __name__ == "__main__":
     driver = initialize_driver()
     screenshot_dir = '/tmp/screenshots/'
     os.makedirs(screenshot_dir, exist_ok=True)
+    ind_time = datetime.now(pytz.timezone("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S.%f')
+    print(ind_time)
     login(driver)
     book_workstation(driver)
