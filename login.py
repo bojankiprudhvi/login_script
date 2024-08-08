@@ -79,7 +79,7 @@ def book_workstation(driver):
     save_booking(driver)
     ind_time2 = datetime.now(pytz.timezone("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S.%f')
     logging.info("After clicking save booking")
-    print(ind_time2)
+    logging.info(ind_time2)
     logging.info("Booking process completed successfully.")
     # Take a screenshot
     screenshot_dir = '/tmp/screenshots/'
@@ -120,7 +120,7 @@ def execute_booking_status_function(driver):
     logging.info(enddate)
     ind_time1 = datetime.now(pytz.timezone("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S.%f')
     logging.info("Before clicking save booking")
-    print(ind_time1)
+    logging.info(ind_time1)
     function_name = "checkbookingstatus_greyred"
     driver.execute_script(f"{function_name}(1041, 0, 1437, 0, '{date}', '{enddate}', '{starttime}', '{endtime}')")
     logging.info("Exiting  the execute_booking_status_function")
